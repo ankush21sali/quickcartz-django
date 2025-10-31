@@ -12,6 +12,18 @@
 <div class="row">
 	<aside class="col-lg-9">
 <div class="card">
+
+{% if not cart_items %}
+    <div class="container m-3">
+		<h2 class="text-center">Your Shopping Cart is Empty</h2>
+	<br>
+	<div class="text-center">
+		<a href="{% url 'store' %}" class="btn btn-primary">Continue Shopping</a>
+	</div>
+	</div>
+
+{% else %}
+
 <table class="table table-borderless table-shopping-cart">
 <thead class="text-muted">
 <tr class="small text-uppercase">
@@ -30,8 +42,9 @@
 		<figure class="itemside align-items-center">
 			<div class="aside"><img src="{{cart_item.product.images.url}}" class="img-sm"></div>
 			<figcaption class="info">
-				<a href="#" class="title text-dark">{{cart_item.product.product_name}}</a>
-				<p class="text-muted small">Matrix: 25 Mpx <br> Brand: Canon</p>
+				<a href="{{ cart_item.product.get_url }}" class="title text-dark">{{cart_item.product.product_name}}</a>
+				<p class="text-muted small">Color: {{ cart_item.variant.color }}</p>
+				<p class="text-muted small">Size: {{ cart_item.variant.size }}</p>
 			</figcaption>
 		</figure>
 	</td>
@@ -40,11 +53,11 @@
 					<div class="col"> 
 						<div class="input-group input-spinner">
 							<div class="input-group-prepend">
-							<a href="{% url "remove_quantity" cart_item.product.id %}" class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
+							<a href="{% url "remove_quantity" cart_item.product.id cart_item.variant.id %}" class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
 							</div>
 							<input type="text" class="form-control"  value="{{cart_item.quantity}}">
 							<div class="input-group-append">
-							<a href="{% url "add_quantity" cart_item.product.id %}" class="btn btn-light" type="button" id="button-minus"><i class="fa fa-plus"></i> </a>
+							<a href="{% url "add_quantity" cart_item.product.id cart_item.variant.id %}" class="btn btn-light" type="button" id="button-minus"><i class="fa fa-plus"></i> </a>
 							</div>
 						</div> <!-- input-group.// -->
 					</div> <!-- col.// -->
@@ -56,11 +69,11 @@
 		</div> <!-- price-wrap .// -->
 	</td>
 	<td class="text-right"> 
-	<a href="{% url "remove_cart_item" cart_item.product.id %}" class="btn btn-danger"> Remove</a>
+	<a href="{% url "remove_cart_item" cart_item.product.id cart_item.variant.id %}" class="btn btn-danger"> Remove</a>
 	</td>
 </tr>
-
 {% endfor %}
+{% endif %}
 
 </tbody>
 </table>
@@ -88,7 +101,7 @@
 				<img src="{% static "./images/misc/payments.png" %}" height="26">
 			</p>
 			<a href="./place-order.html" class="btn btn-primary btn-block"> Checkout </a>
-			<a href="./store.html" class="btn btn-light btn-block">Continue Shopping</a>
+			<a href="{% url "store" %}" class="btn btn-light btn-block">Continue Shopping</a>
 		</div> <!-- card-body.// -->
 		</div> <!-- card.// -->
 

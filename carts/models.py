@@ -1,5 +1,5 @@
 from django.db import models
-from store.models import Product
+from store.models import Product, ProductVariant
 
 # Create your models here.
 class Cart(models.Model):
@@ -12,12 +12,19 @@ class Cart(models.Model):
 
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE, blank=True, null=True)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     is_active = models.BooleanField(default=True)
 
     def sub_total(self):
         return self.product.price * self.quantity
+    
+    # def sub_total(self):
+    #     # Future-proof subtotal
+    #     return (self.variant.product.price if self.variant else self.product.price) * self.quantity
 
     def __str__(self):
-        return str(self.product)
+        if self.variant:
+            return f"{self.product.product_name} ({self.variant.color}, {self.variant.size})"
+        return self.product.product_name
