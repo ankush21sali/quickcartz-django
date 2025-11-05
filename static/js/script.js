@@ -58,3 +58,7 @@ $(document).ready(function() {
 }); 
 // jquery end
 
+// Display Messages Remove By TimeOut 
+setTimeout(function(){
+  $('#message').fadeOut('slow')
+}, 4000)
