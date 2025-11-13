@@ -1,9 +1,10 @@
 from django.db import models
 from store.models import Product, ProductVariant
+from accounts.models import Account
 
 # Create your models here.
 class Cart(models.Model):
-    cart_id = models.CharField(max_length=250, unique=True)
+    cart_id = models.CharField(max_length=250, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)    
 
     def __str__(self):
@@ -11,11 +12,13 @@ class Cart(models.Model):
     
 
 class CartItem(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE, blank=True, null=True)
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=1)
     is_active = models.BooleanField(default=True)
+
 
     def sub_total(self):
         return self.product.price * self.quantity

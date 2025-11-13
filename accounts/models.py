@@ -6,6 +6,7 @@ class MyAccountManager(BaseUserManager):
     def create_user(self, first_name, last_name, username, email, password=None):
         if not email:
             raise ValueError('User must have an email address')
+        
         if not username:
             raise ValueError('User must have an username')
 
@@ -17,7 +18,6 @@ class MyAccountManager(BaseUserManager):
         )
 
         user.set_password(password)
-        user.is_active = True
         user.save(using=self._db)
         return user
 
@@ -30,6 +30,7 @@ class MyAccountManager(BaseUserManager):
             password=password
         )
         user.is_admin = True
+        user.is_active = True
         user.is_staff = True
         user.is_superadmin = True
         user.save(using=self._db)
