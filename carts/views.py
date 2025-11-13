@@ -188,7 +188,7 @@ def checkout(request, cart_items=None):
         total += (cart_item.product.price * cart_item.quantity)
         quantity += cart_item.quantity
 
-    # Example: 2% GST tax (you can change this)
+    # Example: 2% GST tax (you can change this).
     tax = (2 * total) / 100
     grand_total = total + tax
 
