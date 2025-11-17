@@ -1,0 +1,27 @@
+{% autoescape off %}
+
+Hi {{ user.first_name }},
+
+YOUR ORDER HAS BEEN RECEIVED 🎉
+
+Order Number: {{ order.order_number }}
+
+---------------------------------------
+ORDER DETAILS
+---------------------------------------
+
+{% for item in ordered_products %}
+Product: {{ item.product.product_name }}
+Variant: {% if item.variant %} {{ item.variant }} {% else %}-{% endif %}
+Quantity: {{ item.quantity }}
+Price: ${{ item.product_price }}
+---------------------------------------
+{% endfor %}
+
+Total Amount Paid: ${{ order.order_total }}
+Payment Method: {{ order.payment.payment_method }}
+
+Thank you for shopping with QuickCartz ❤️
+We’ll notify you when your order is shipped.
+
+{% endautoescape %}
