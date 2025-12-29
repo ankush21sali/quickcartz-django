@@ -90,18 +90,13 @@ AUTH_USER_MODEL = 'accounts.Account'
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': config('ENGINE'),
-        'NAME': config('NAME'),
-        'USER': config('USER'),
-        'PASSWORD': config('PASSWORD'),
-        'HOST': config('HOST'),
-        'PORT': config('PORT', cast=int),
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
-
-DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
 
 
 # Password validation
