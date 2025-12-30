@@ -14,10 +14,6 @@ from pathlib import Path
 from decouple import config
 import dj_database_url
 
-# Cloudinary Storage
-import cloudinary
-import cloudinary_storage
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -51,10 +47,6 @@ INSTALLED_APPS = [
     'store',
     'carts',
     'orders',
-
-    # Live Project Imgaes are Stogre on Cloud
-    'cloudinary', 
-    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -146,13 +138,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-# Cloud File Configurations
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+#Media File Configurations
 
-# Cloudinary settings
-CLOUDINARY_STORAGE = {
-    'CLOUDINARY_URL': config('CLOUDINARY_URL')
-}
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
