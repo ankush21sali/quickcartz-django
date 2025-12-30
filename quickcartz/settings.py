@@ -150,6 +150,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+WHITENOISE_USE_FINDERS = True
+
 #Media File Configurations
 
 MEDIA_URL = '/media/'
