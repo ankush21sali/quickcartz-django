@@ -16,8 +16,7 @@ import dj_database_url
 
 # Cloudinary Storage
 import cloudinary
-import cloudinary.uploader
-import cloudinary.api
+import cloudinary_storage
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -147,8 +146,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-# Media File Configurations
-MEDIA_URL = '/media/'
+# Cloud File Configurations
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Cloudinary settings
