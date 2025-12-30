@@ -80,7 +80,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'quickcartz.wsgi.application'
 
-DB_LIVE = config('DB_LIVE', cast=bool)
 
 AUTH_USER_MODEL = 'accounts.Account'
 
@@ -88,7 +87,9 @@ AUTH_USER_MODEL = 'accounts.Account'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if DB_LIVE in ["False", False]:
+DB_LIVE = config('DB_LIVE', default=False, cast=bool)
+
+if not DB_LIVE:
 
     DATABASES = {
     'default': {
