@@ -11,6 +11,9 @@ from django.template.loader import render_to_string
 import datetime
 import json
 
+from django.conf import settings
+import logging
+
 # Create your views here.
 def payments(request):
     body = json.loads(request.body)
@@ -65,9 +68,20 @@ def payments(request):
         'ordered_products': ordered_products,
     })
 
-    to_email = request.user.email
-    send_email = EmailMessage(mail_subject, message, to=[to_email])
-    send_email.send()
+    logger = logging.getLogger(__name__)
+
+    # to_email = request.user.email
+    # send_email = EmailMessage(mail_subject, message, to=[to_email])
+    # send_email.send()
+
+    email = EmailMessage(
+        mail_subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        [request.user.email],
+    )
+    email.content_subtype = "html"
+    email.send(fail_silently=True) 
     
     # Send order number and transaction id back to sendData method via JsonResponse.
     data = {
