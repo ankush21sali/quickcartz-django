@@ -76,7 +76,7 @@ def register(request):
             )
             
             email.content_subtype = "html"
-            email.send()
+            email.send(fail_silently=True)
 
             # redirect page for email verification
             return redirect(f'/accounts/login/?command=verification&email={user_email}')
