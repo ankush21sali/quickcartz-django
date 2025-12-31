@@ -29,7 +29,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = [
-    "quickcartz.up.railway.app",
+    "quickcartz-gr3f.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
@@ -207,7 +207,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 
 
-CSRF_TRUSTED_ORIGINS = ["https://quickcartz.up.railway.app",]
+CSRF_TRUSTED_ORIGINS = ["https://quickcartz-gr3f.onrender.com",]
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
