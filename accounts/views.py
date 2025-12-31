@@ -34,7 +34,7 @@ def register(request):
             password = form.cleaned_data['password']
 
             #create username is automatically unique-like (based on their email).
-            username = email.split("@")[0]
+            username = user_email.split("@")[0]
 
             user = Account.objects.create_user(
                 first_name=first_name, 
