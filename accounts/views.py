@@ -17,6 +17,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
+from django.conf import settings
 
 
 # Create your views here.
@@ -61,9 +62,19 @@ def register(request):
                 'token': default_token_generator.make_token(user),
             })
 
-            to_email = email
-            send_email = EmailMessage(mail_subject, message, to=[to_email])
-            send_email.send()
+            # to_email = email
+            # send_email = EmailMessage(mail_subject, message, to=[to_email])
+            # send_email.send()
+
+            email = EmailMessage(
+            mail_subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+            )
+            
+            email.content_subtype = "html"
+            email.send()
 
             # redirect page for email verification
             return redirect(f'/accounts/login/?command=verification&email={email}')
