@@ -79,7 +79,7 @@ def register(request):
             email.send()
 
             # redirect page for email verification
-            return redirect(f'/accounts/login/?command=verification&email={email}')
+            return redirect(f'/accounts/login/?command=verification&email={user_email}')
         
         else:
             # form is invalid (maybe missing field, etc.)
