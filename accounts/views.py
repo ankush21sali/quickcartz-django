@@ -67,13 +67,14 @@ def register(request):
 
             try:
                 resend.api_key = config("RESEND_API_KEY")
-                
+
                 resend.Emails.send({
-                    "from": config('EMAIL_HOST_USER'),
+                    "from": settings.RESEND_FROM_EMAIL,
                     "to": email,
                     "subject": mail_subject,
                     "html": message
                     })
+                
             except Exception as e:
                 print("Email error:", e)
 

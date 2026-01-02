@@ -208,6 +208,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 EMAIL_TIMEOUT = 10
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+RESEND_FROM_EMAIL = "QuickCartz <onboarding@resend.dev>"
 
 
 CSRF_TRUSTED_ORIGINS = ["https://quickcartz-gr3f.onrender.com",]
