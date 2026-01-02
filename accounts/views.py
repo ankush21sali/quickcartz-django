@@ -20,8 +20,6 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.conf import settings
 
-resend.api_key = config("RESEND_API_KEY")
-
 
 # Create your views here.
 def register(request):
@@ -68,6 +66,8 @@ def register(request):
             })
 
             try:
+                resend.api_key = config("RESEND_API_KEY")
+                
                 resend.Emails.send({
                     "from": config('EMAIL_HOST_USER'),
                     "to": email,
