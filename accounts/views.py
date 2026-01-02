@@ -8,7 +8,8 @@ from carts.views import _cart_id
 from carts.models import Cart, CartItem
 from orders.models import Order, OrderProduct
 
-import requests
+import requests, resend
+from decouple import config
 
 # Email Verification
 from django.contrib.sites.shortcuts import get_current_site
@@ -18,6 +19,8 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.conf import settings
+
+resend.api_key = config("RESEND_API_KEY")
 
 
 # Create your views here.
@@ -30,16 +33,16 @@ def register(request):
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             phone_number = form.cleaned_data['phone_number']
-            user_email = form.cleaned_data['email']
+            email = form.cleaned_data['email']
             password = form.cleaned_data['password']
 
             #create username is automatically unique-like (based on their email).
-            username = user_email.split("@")[0]
+            username = email.split("@")[0]
 
             user = Account.objects.create_user(
                 first_name=first_name, 
                 last_name=last_name, 
-                email=user_email, 
+                email=email, 
                 username=username, 
                 password=password
                 )
@@ -49,10 +52,10 @@ def register(request):
             user.save()
 
             # Create User Profile
-            profile = UserProfile()
-            profile.user_id = user.id
-            profile.profile_picture = 'default/default-user.png'
-            profile.save()
+            profile = UserProfile.objects.create(
+                user=user,
+                profile_picture='default/default-user.png'
+            )
 
             # USER ACTIVATION
             current_site = get_current_site(request)
@@ -64,22 +67,18 @@ def register(request):
                 'token': default_token_generator.make_token(user),
             })
 
-            # to_email = email
-            # send_email = EmailMessage(mail_subject, message, to=[to_email])
-            # send_email.send()
-
-            email = EmailMessage(
-            mail_subject,
-            message,
-            settings.DEFAULT_FROM_EMAIL,
-            [user_email],
-            )
-            
-            email.content_subtype = "html"
-            email.send(fail_silently=True)
+            try:
+                resend.Emails.send({
+                    "from": config('EMAIL_HOST_USER'),
+                    "to": email,
+                    "subject": mail_subject,
+                    "html": message
+                    })
+            except Exception as e:
+                print("Email error:", e)
 
             # redirect page for email verification
-            return redirect(f'/accounts/login/?command=verification&email={user_email}')
+            return redirect(f'/accounts/login/?command=verification&email={email}')
         
         else:
             # form is invalid (maybe missing field, etc.)
