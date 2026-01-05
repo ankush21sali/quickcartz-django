@@ -208,7 +208,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="9f4078001@smtp-brevo.com")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
-DEFAULT_FROM_EMAIL = "QuickCartz <9f4078001@smtp-brevo.com>"
+DEFAULT_FROM_EMAIL = "QuickCartz <noreply@brevo-mail.com>"
 EMAIL_TIMEOUT = 10  # seconds
 
 
