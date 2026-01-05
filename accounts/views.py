@@ -65,14 +65,9 @@ def register(request):
                 'token': default_token_generator.make_token(user),
             })
 
-            email_message = EmailMessage(
-            mail_subject,
-            message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[email],
-            )
-
-            email_message.send()
+            to_email = email
+            send_email = EmailMessage(mail_subject, message, to=[to_email])
+            send_email.send()
 
             # redirect page for email verification
             return redirect(f'/accounts/login/?command=verification&email={email}')
