@@ -14,6 +14,7 @@ from pathlib import Path
 from decouple import config
 import dj_database_url
 import cloudinary
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -211,7 +212,7 @@ EMAIL_BACKEND = "anymail.backends.brevo.EmailBackend"
 # EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
 ANYMAIL = {
-    "BREVO_API_KEY": config("BREVO_API_KEY"),
+    "BREVO_API_KEY": os.environ.get("BREVO_API_KEY"),
 }
 
 DEFAULT_FROM_EMAIL = "saliankush21@gmail.com"
