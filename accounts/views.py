@@ -65,18 +65,14 @@ def register(request):
                 'token': default_token_generator.make_token(user),
             })
 
-            try:
-                resend.api_key = config("RESEND_API_KEY")
+            email = EmailMessage(
+            mail_subject,
+            message,
+            to=[email],
+            )
 
-                resend.Emails.send({
-                    "from": settings.RESEND_FROM_EMAIL,
-                    "to": email,
-                    "subject": mail_subject,
-                    "html": message
-                    })
-                
-            except Exception as e:
-                print("Email error:", e)
+            email.content_subtype = "html"  # IMPORTANT
+            email.send()
 
             # redirect page for email verification
             return redirect(f'/accounts/login/?command=verification&email={email}')
