@@ -68,6 +68,7 @@ def register(request):
             email_message = EmailMessage(
             mail_subject,
             message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
             to=[email],
             )
 
