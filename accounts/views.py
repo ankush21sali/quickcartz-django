@@ -65,14 +65,14 @@ def register(request):
                 'token': default_token_generator.make_token(user),
             })
 
-            email = EmailMessage(
+            email_message = EmailMessage(
             mail_subject,
             message,
             to=[email],
             )
 
-            email.content_subtype = "html"  # IMPORTANT
-            email.send(fail_silently=True)
+            email_message.content_subtype = "html"  # IMPORTANT
+            email_message.send(fail_silently=True)
 
 
             # redirect page for email verification
