@@ -209,6 +209,7 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="9f4078001@smtp-brevo.com")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
 DEFAULT_FROM_EMAIL = "QuickCartz <9f4078001@smtp-brevo.com>"
+EMAIL_TIMEOUT = 10  # seconds
 
 
 CSRF_TRUSTED_ORIGINS = ["https://quickcartz-gr3f.onrender.com",]
