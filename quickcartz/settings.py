@@ -214,7 +214,7 @@ ANYMAIL = {
     "BREVO_API_KEY": config("BREVO_API_KEY"),
 }
 
-DEFAULT_FROM_EMAIL = "the21baryonyx@gmail.com"
+DEFAULT_FROM_EMAIL = "saliankush21@gmail.com"
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 CSRF_TRUSTED_ORIGINS = ["https://quickcartz-gr3f.onrender.com",]
