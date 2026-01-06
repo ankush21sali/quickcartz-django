@@ -8,7 +8,7 @@ from carts.views import _cart_id
 from carts.models import Cart, CartItem
 from orders.models import Order, OrderProduct
 
-import requests, resend
+import requests
 from decouple import config
 
 # Email Verification
@@ -65,9 +65,16 @@ def register(request):
                 'token': default_token_generator.make_token(user),
             })
 
-            to_email = email
-            send_email = EmailMessage(mail_subject, message, to=[to_email])
-            send_email.send()
+            email_message = EmailMessage(
+                mail_subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [email],
+            )
+            
+            email_message.content_subtype = "html"
+            email_message.send()
+
 
             # redirect page for email verification
             return redirect(f'/accounts/login/?command=verification&email={email}')
@@ -208,9 +215,15 @@ def forgotPassword(request):
                 'token': default_token_generator.make_token(user),
             })
 
-            to_email = email
-            send_email = EmailMessage(mail_subject, message, to=[to_email])
-            send_email.send()
+            email_message = EmailMessage(
+                mail_subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [email],
+            )
+            
+            email_message.content_subtype = "html"
+            email_message.send()
 
             messages.success(request, "Password reset email has been sent to your email address.")
             return redirect('login')

@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = [
     "quickcartz-gr3f.onrender.com",
@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
 
-    "anymail",
 ]
 
 MIDDLEWARE = [
@@ -103,7 +102,7 @@ AUTH_USER_MODEL = 'accounts.Account'
 
 # if not DB_LIVE:
 
-#     DATABASES = {
+# DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': BASE_DIR / 'db.sqlite3',
@@ -202,23 +201,18 @@ MESSAGE_TAGS = {
 
 
 # SMTP configuration
-EMAIL_BACKEND = "anymail.backends.brevo.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-# EMAIL_HOST = "smtp.gmail.com"
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
-# EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
-ANYMAIL = {
-    "BREVO_API_KEY": os.environ.get("BREVO_API_KEY"),
-}
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
 
-print("BREVO_API_KEY LOADED =", "BREVO_API_KEY" in os.environ)
-
-DEFAULT_FROM_EMAIL = "saliankush21@gmail.com"
-SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 CSRF_TRUSTED_ORIGINS = ["https://quickcartz-gr3f.onrender.com",]
 
