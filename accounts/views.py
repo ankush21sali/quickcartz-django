@@ -73,7 +73,7 @@ def register(request):
             )
             
             email_message.content_subtype = "html"
-            email_message.send()
+            email_message.send(fail_silently=True)
 
 
             # redirect page for email verification
@@ -223,7 +223,7 @@ def forgotPassword(request):
             )
             
             email_message.content_subtype = "html"
-            email_message.send()
+            email_message.send(fail_silently=True)
 
             messages.success(request, "Password reset email has been sent to your email address.")
             return redirect('login')
