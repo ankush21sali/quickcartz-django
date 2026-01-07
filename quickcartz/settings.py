@@ -14,7 +14,6 @@ from pathlib import Path
 from decouple import config
 import dj_database_url
 import cloudinary
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -98,9 +97,7 @@ AUTH_USER_MODEL = 'accounts.Account'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DB_LIVE = config('DB_LIVE', default=False, cast=bool)
-
-# if not DB_LIVE:
+# SQLite3 DB
 
 # DATABASES = {
 #     'default': {
@@ -109,9 +106,11 @@ AUTH_USER_MODEL = 'accounts.Account'
 #         }
 #     }
 
-# else:
+# -----------------------------------------------------------------------
 
-#     DATABASES = {
+# PostgreSQL DB
+
+# DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': config('DB_NAME'),   
@@ -121,6 +120,9 @@ AUTH_USER_MODEL = 'accounts.Account'
 #         'PORT': config('DB_PORT', cast=int),
 #         }
 #     }
+
+
+# Render Live PostgreSQL DB
 
 DATABASES = {
     "default": dj_database_url.config(
@@ -166,7 +168,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage" # for deployment to render static imgafes
 
 WHITENOISE_USE_FINDERS = True
 

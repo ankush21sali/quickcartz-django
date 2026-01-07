@@ -15,6 +15,16 @@
         Already verified? <a href="{% url 'login' %}">Login</a>
     </div>
 
+    {% elif request.GET.command == 'auto_verification' %}
+    <div class="container mx-auto alert alert-info text-center" role="alert"
+        style="max-width: 1024px; margin-top:100px;">
+        Thank you for registering with us. Your account has been created successfully. <strong>{{ request.GET.email }}</strong>.
+        Due to a temporary system issue, email verification may be delayed.
+        You may proceed to log in.
+        <br><br>
+        Already verified? <a href="{% url 'login' %}">Login</a>
+    </div>
+
     {% else %}
 
     <!-- ============================ COMPONENT LOGIN   ================================= -->

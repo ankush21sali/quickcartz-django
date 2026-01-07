@@ -9,7 +9,6 @@ from carts.models import Cart, CartItem
 from orders.models import Order, OrderProduct
 
 import requests
-from decouple import config
 
 # Email Verification
 from django.contrib.sites.shortcuts import get_current_site
@@ -55,29 +54,36 @@ def register(request):
                 profile_picture='default/default-user.png'
             )
 
-            # USER ACTIVATION
-            current_site = get_current_site(request)
-            mail_subject = "Please activate your account!"
-            message = render_to_string('accounts/account_verification_email.html',{
-                'user': user,
-                'domain': current_site,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': default_token_generator.make_token(user),
-            })
-
-            email_message = EmailMessage(
-                mail_subject,
-                message,
-                settings.DEFAULT_FROM_EMAIL,
-                [email],
-            )
+            try:
+                # USER ACTIVATION
+                current_site = get_current_site(request)
+                mail_subject = "Please activate your account!"
+                message = render_to_string('accounts/account_verification_email.html',{
+                    'user': user,
+                    'domain': current_site,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': default_token_generator.make_token(user),
+                    })
+                
+                email_message = EmailMessage(
+                    mail_subject,
+                    message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [email],
+                    )
+                
+                email_message.content_subtype = "html"
+                email_message.send(fail_silently=False)
+                
+                # redirect page for email verification
+                return redirect(f'/accounts/login/?command=verification&email={email}')
             
-            email_message.content_subtype = "html"
-            email_message.send(fail_silently=True)
+            except Exception:
+                user.is_active = True
+                user.save()
 
-
-            # redirect page for email verification
-            return redirect(f'/accounts/login/?command=verification&email={email}')
+                # redirect on email verification issue page
+                return redirect(f'/accounts/login/?command=auto_verification&email={email}')
         
         else:
             # form is invalid (maybe missing field, etc.)
