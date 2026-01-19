@@ -61,27 +61,27 @@ def payments(request):
 
     # Send order recieved email to customer
 
-    mail_subject = 'Thank you for your order!'
-    message = render_to_string('orders/order_recieved_email.html', {
-        'user': request.user,
-        'order': order,
-        'ordered_products': ordered_products,
-    })
+    # mail_subject = 'Thank you for your order!'
+    # message = render_to_string('orders/order_recieved_email.html', {
+    #     'user': request.user,
+    #     'order': order,
+    #     'ordered_products': ordered_products,
+    # })
 
-    logger = logging.getLogger(__name__)
+    # logger = logging.getLogger(__name__)
 
-    # to_email = request.user.email
-    # send_email = EmailMessage(mail_subject, message, to=[to_email])
-    # send_email.send()
+    # # to_email = request.user.email
+    # # send_email = EmailMessage(mail_subject, message, to=[to_email])
+    # # send_email.send()
 
-    email = EmailMessage(
-        mail_subject,
-        message,
-        settings.DEFAULT_FROM_EMAIL,
-        [request.user.email],
-    )
-    email.content_subtype = "html"
-    email.send(fail_silently=True) 
+    # email = EmailMessage(
+    #     mail_subject,
+    #     message,
+    #     settings.DEFAULT_FROM_EMAIL,
+    #     [request.user.email],
+    # )
+    # email.content_subtype = "html"
+    # email.send(fail_silently=True) 
     
     # Send order number and transaction id back to sendData method via JsonResponse.
     data = {
