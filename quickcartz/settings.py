@@ -204,7 +204,7 @@ MESSAGE_TAGS = {
 }
 
 
-# Anymail configuration
+# Anymail configuration.
 EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
 
 ANYMAIL = {
