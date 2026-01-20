@@ -30,16 +30,16 @@ def register(request):
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             phone_number = form.cleaned_data['phone_number']
-            email = form.cleaned_data['email']
+            user_email = form.cleaned_data['email']
             password = form.cleaned_data['password']
 
             #create username is automatically unique-like (based on their email).
-            username = email.split("@")[0]
+            username = user_email.split("@")[0]
 
             user = Account.objects.create_user(
                 first_name=first_name, 
                 last_name=last_name, 
-                email=email, 
+                email=user_email, 
                 username=username, 
                 password=password
                 )
@@ -54,34 +54,27 @@ def register(request):
                 profile_picture='default/default-user.png'
             )
 
-            # # USER ACTIVATION
-            # current_site = get_current_site(request)
-            # mail_subject = "Please activate your account!"
-            # message = render_to_string('accounts/account_verification_email.html',{
-            #     'user': user,
-            #     'domain': current_site,
-            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            #     'token': default_token_generator.make_token(user),
-            #     })
+            # USER ACTIVATION
+            current_site = get_current_site(request)
+            mail_subject = "Please activate your account!"
+            message = render_to_string('accounts/account_verification_email.html',{
+                'user': user,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': default_token_generator.make_token(user),
+                })
                 
-            # email_message = EmailMessage(
-            #     mail_subject,
-            #     message,
-            #     settings.DEFAULT_FROM_EMAIL,
-            #     [email],
-            #     )
-                
-            # email_message.content_subtype = "html"
-            # email_message.send(fail_silently=False)
-                
-            # # redirect page for email verification
-            # return redirect(f'/accounts/login/?command=verification&email={email}')    
+            email_message = EmailMessage(
+                mail_subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [user_email],
+                )
             
-            user.is_active = True
-            user.save()
-
-            # redirect on email verification issue page
-            return redirect(f'/accounts/login/?command=auto_verification&email={email}')
+            email_message.send()
+                
+            # redirect page for email verification
+            return redirect(f'/accounts/login/?command=verification&email={user_email}')
         
         else:
             # form is invalid (maybe missing field, etc.)
@@ -226,8 +219,7 @@ def forgotPassword(request):
                 [email],
             )
             
-            email_message.content_subtype = "html"
-            email_message.send(fail_silently=True)
+            email_message.send()
 
             messages.success(request, "Password reset email has been sent to your email address.")
             return redirect('login')

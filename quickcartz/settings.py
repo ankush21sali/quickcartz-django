@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
 
+    'anymail',
+
 ]
 
 MIDDLEWARE = [
@@ -202,18 +204,14 @@ MESSAGE_TAGS = {
 }
 
 
-# SMTP configuration
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# Anymail configuration
+EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
 
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+ANYMAIL = {
+    "SENDINBLUE_API_KEY": config('SENDINBLUE_API_KEY'),
+}
 
-EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
-
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = 'QuickCartz <saliankush21@gmail.com>'
 
 
 CSRF_TRUSTED_ORIGINS = ["https://quickcartz-gr3f.onrender.com",]
