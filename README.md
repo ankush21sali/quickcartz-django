@@ -138,10 +138,4 @@ This project helped me gain hands‑on experience with:
 ## Author
 
 **Ankush Sali**
-Aspiring Python / Django Backend Developer
-
----
-
-## License
-
-This project is for learning and portfolio purposes.
+Aspiring Python Backend Developer and DevOps Enthusiast
