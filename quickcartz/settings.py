@@ -29,7 +29,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = [
-    "quickcartz-gr3f.onrender.com",
+    "quickcartz-frx8.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
