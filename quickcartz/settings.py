@@ -101,12 +101,12 @@ AUTH_USER_MODEL = 'accounts.Account'
 
 # SQLite3 DB
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+#     }
 
 # -----------------------------------------------------------------------
 
@@ -124,13 +124,13 @@ DATABASES = {
 #     }
 
 
-# Render Live PostgreSQL DB
+# Supabase Live PostgreSQL DB
 
-# DATABASES = {
-#     "default": dj_database_url.config(
-#         default=config("DATABASE_URL")
-#     )
-# }
+DATABASES = {
+    "default": dj_database_url.config(
+        default=config("DATABASE_URL")
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -214,7 +214,7 @@ ANYMAIL = {
 DEFAULT_FROM_EMAIL = 'QuickCartz <saliankush21@gmail.com>'
 
 
-CSRF_TRUSTED_ORIGINS = ["https://quickcartz-gr3f.onrender.com",]
+CSRF_TRUSTED_ORIGINS = ["https://quickcartz-frx8.onrender.com",]
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
