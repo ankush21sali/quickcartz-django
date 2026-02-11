@@ -73,7 +73,7 @@ def add_quantity(request, product_id, variant_id):
         )
     else:
         # Guest user → cart is linked to session
-        cart = Cart.objects.get_object_or_404(cart_id=_cart_id(request))
+        cart = get_object_or_404(Cart, cart_id=_cart_id(request))
         cart_item = CartItem.objects.get(
             product=product, 
             variant=variant, 
